@@ -1,3 +1,5 @@
+apply plugin: 'com.jfrog.bintray'
+
 bintray {
 		user = 'oehme'
 		if (project.hasProperty('bintrayApiKey')) {
