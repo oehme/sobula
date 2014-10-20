@@ -1,8 +1,7 @@
 apply plugin: 'signing'
-apply from: "https://raw.githubusercontent.com/oehme/sobula/master/mavenRelease.gradle"
 apply from: "https://raw.githubusercontent.com/oehme/sobula/master/bintrayRelease.gradle"
 
-task release(dependsOn: [bintrayUpload, uploadArchives], description: 'Releases artifacts to public repositories')
+task release(dependsOn: [bintrayUpload], description: 'Releases artifacts to public repositories')
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'

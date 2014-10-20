@@ -1,0 +1,38 @@
+import org.gradle.plugins.ide.eclipse.model.*
+
+plugins {
+  id 'org.xtend.xtend' version '0.3.2'
+	id 'com.jfrog.bintray' version '0.5'
+	id 'groovy'
+}
+
+group = "de.oehme.sobula"
+version = "0.0.1"
+description = "My own little build language"
+
+apply from: "release.gradle"
+
+repositories.jcenter()
+
+dependencies {
+  compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.7+'
+	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.6'
+	compile gradleApi()
+	compile localGroovy()
+}
+
+eclipse {
+    classpath {
+        file {
+            whenMerged {Classpath cp ->
+                String gradleHome = gradle.getGradleHomeDir().absolutePath.replace(File.separator, '/')
+                String gradleSrc = "${gradleHome}/src"
+                cp.entries.each {ClasspathEntry entry ->
+                    if ((entry in AbstractLibrary) && (entry.library.file.name.startsWith('gradle-'))) {
+                        entry.sourcePath = new org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory().fromPath(gradleSrc)
+                    }
+                }
+            }
+        }
+    }
+}
