@@ -7,7 +7,6 @@ buildscript {
 
 plugins {
 	id 'org.xtend.xtend' version '0.3.2'
-	id 'com.jfrog.bintray' version '0.5'
 	id 'groovy'
 }
 apply plugin: 'de.oehme.sobula.maven-release'
