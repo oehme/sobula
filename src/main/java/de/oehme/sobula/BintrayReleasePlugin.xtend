@@ -36,7 +36,7 @@ class BintrayReleasePlugin implements Plugin<Project> {
 								val pluginName = name.replace(".properties", "")
 								'''«pluginName»:«project.group»:«project.name»'''
 							]
-							attributes = #{"gradle-plguin" -> gradlePlugins}
+							attributes = #{"gradle-plugin" -> gradlePlugins}
 						}
 					]
 				]
