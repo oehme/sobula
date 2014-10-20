@@ -8,7 +8,7 @@ public class MavenReleasePlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		project.with {
 			apply plugin: 'maven'
-			apply plugin: ReleasePlugin
+			apply plugin: 'de.oehme.sobula.release'
 			release.dependsOn(uploadArchives)
 			uploadArchives {
 				repositories {

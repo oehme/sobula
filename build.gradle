@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "de.oehme.sobula"
-version = "0.0.1"
+version = "0.0.2"
 description = "My own little build language"
 
 apply from: "release.gradle"
