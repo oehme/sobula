@@ -1,10 +1,8 @@
-import org.gradle.plugins.ide.eclipse.model.*
-
 buildscript {
 	repositories {
 		maven { url 'http://dl.bintray.com/oehme/maven/' }
 	}
-	dependencies { classpath 'de.oehme.sobula:sobula:0.0.2' }
+	dependencies { classpath 'de.oehme.sobula:sobula:0.0.+' }
 }
 
 plugins {
@@ -12,35 +10,18 @@ plugins {
 	id 'com.jfrog.bintray' version '0.5'
 	id 'groovy'
 }
-
-group = "de.oehme.sobula"
-version = "0.0.3"
-description = "My own little build language"
-
 apply plugin: 'de.oehme.sobula.maven-release'
 apply plugin: 'de.oehme.sobula.bintray-release'
+
+group = "de.oehme.sobula"
+version = "0.0.4"
+description = "My own little build language"
 
 repositories.jcenter()
 
 dependencies {
-	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.7+'
+	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:[2.7,2.8)'
 	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.6'
 	compile gradleApi()
 	compile localGroovy()
-}
-
-eclipse {
-	classpath {
-		file {
-			whenMerged {Classpath cp ->
-				String gradleHome = gradle.getGradleHomeDir().absolutePath.replace(File.separator, '/')
-				String gradleSrc = "${gradleHome}/src"
-				cp.entries.each {ClasspathEntry entry ->
-					if ((entry in AbstractLibrary) && (entry.library.file.name.startsWith('gradle-'))) {
-						entry.sourcePath = new org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory().fromPath(gradleSrc)
-					}
-				}
-			}
-		}
-	}
 }
