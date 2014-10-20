@@ -20,31 +20,32 @@ public class MavenReleasePlugin implements Plugin<Project> {
 								authentication(userName: sonatypeUsername, password: sonatypePassword)
 							}
 						}
-
-						pom.project {
-							name project.name
-							description project.description
-							packaging 'jar'
-							url "https://github.com/oehme/${rootProject.name}"
-
-							scm {
-								url "scm:git@github.com:oehme/${rootProject.name}.git"
-								connection "scm:git@github.com:oehme/${rootProject.name}.git"
-								developerConnection "scm:git@github.com:oehme/${rootProject.name}.git"
-							}
-
-							licenses {
-								license {
-									name 'Eclipse Public License - v 1.0'
-									url 'http://www.eclipse.org/org/documents/epl-v10.php'
-									distribution 'repo'
+						project.afterEvaluate{
+							pom.project {
+								name project.name
+								description project.description
+								packaging 'jar'
+								url "https://github.com/oehme/${rootProject.name}"
+								
+								scm {
+									url "scm:git@github.com:oehme/${rootProject.name}.git"
+									connection "scm:git@github.com:oehme/${rootProject.name}.git"
+									developerConnection "scm:git@github.com:oehme/${rootProject.name}.git"
 								}
-							}
-
-							developers {
-								developer {
-									id 'oehme'
-									name 'Stefan Oehme'
+								
+								licenses {
+									license {
+										name 'Eclipse Public License - v 1.0'
+										url 'http://www.eclipse.org/org/documents/epl-v10.php'
+										distribution 'repo'
+									}
+								}
+								
+								developers {
+									developer {
+										id 'oehme'
+										name 'Stefan Oehme'
+									}
 								}
 							}
 						}
