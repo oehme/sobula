@@ -23,6 +23,7 @@ class ReleasePlugin implements Plugin<Project> {
 
 		val release = tasks.create(RELEASE_TASK_NAME) [
 			description = "Releases archives to public repositories"
+			group = "publishing"
 		]
 
 		val java = convention.getPlugin(JavaPluginConvention)

@@ -2,25 +2,23 @@ buildscript {
 	repositories {
 		maven { url 'http://dl.bintray.com/oehme/maven/' }
 	}
-	dependencies { classpath 'de.oehme.sobula:sobula:0.0.+' }
+	dependencies { classpath 'de.oehme.sobula:sobula:0.0.4' }
 }
 
 plugins {
-	id 'org.xtend.xtend' version '0.3.2'
-	id 'groovy'
+	id 'org.xtend.xtend' version '0.3.4'
 }
-apply plugin: 'de.oehme.sobula.maven-release'
+
 apply plugin: 'de.oehme.sobula.bintray-release'
 
 group = "de.oehme.sobula"
-version = "0.0.4"
+version = "0.0.5"
 description = "My own little build language"
 
 repositories.jcenter()
 
 dependencies {
 	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:[2.7,2.8)'
-	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.6'
+	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
 	compile gradleApi()
-	compile localGroovy()
 }
