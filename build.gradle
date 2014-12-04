@@ -2,7 +2,7 @@ buildscript {
 	repositories {
 		maven { url 'http://dl.bintray.com/oehme/maven/' }
 	}
-	dependencies { classpath 'de.oehme.sobula:sobula:0.0.4' }
+	dependencies { classpath 'de.oehme.sobula:sobula:0.0.5' }
 }
 
 plugins {
@@ -12,7 +12,7 @@ plugins {
 apply plugin: 'de.oehme.sobula.bintray-release'
 
 group = "de.oehme.sobula"
-version = "0.0.5"
+version = "0.0.6"
 description = "My own little build language"
 
 repositories.jcenter()
@@ -22,3 +22,5 @@ dependencies {
 	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
 	compile gradleApi()
 }
+
+bintray.pkg.version.mavenCentralSync.sync = false
