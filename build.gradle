@@ -2,17 +2,18 @@ buildscript {
 	repositories {
 		mavenLocal()
 	}
-	dependencies { classpath 'com.github.oehme.sobula:sobula:0.0.6' }
+	dependencies { classpath 'com.github.oehme.sobula:sobula:0.0.7' }
 }
 
 plugins {
 	id 'org.xtend.xtend' version '0.3.4'
 }
+
 apply plugin: 'com.github.oehme.sobula.stefan'
 apply plugin: 'com.github.oehme.sobula.bintray-release'
 
 group = "com.github.oehme.sobula"
-version = "0.0.7"
+version = "0.0.8"
 description = "My automated build process for Java open source libraries"
 
 repositories.jcenter()
