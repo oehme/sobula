@@ -2,25 +2,25 @@ buildscript {
 	repositories {
 		maven { url 'http://dl.bintray.com/oehme/maven/' }
 	}
-	dependencies { classpath 'de.oehme.sobula:sobula:0.0.5' }
+	dependencies { classpath 'de.oehme.sobula:sobula:0.0.4' }
 }
 
 plugins {
 	id 'org.xtend.xtend' version '0.3.4'
 }
-
+apply plugin: 'de.oehme.sobula.maven-release'
 apply plugin: 'de.oehme.sobula.bintray-release'
 
-group = "de.oehme.sobula"
+group = "com.github.oehme.sobula"
 version = "0.0.6"
-description = "My own little build language"
+description = "My automated build process for Java open source libraries"
 
 repositories.jcenter()
 
 dependencies {
 	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:[2.7,2.8)'
 	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+	compile 'com.netflix.nebula:gradle-contacts-plugin:2.0.+'
+	compile 'com.netflix.nebula:nebula-publishing-plugin:2.0.+'
 	compile gradleApi()
 }
-
-bintray.pkg.version.mavenCentralSync.sync = false
