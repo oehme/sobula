@@ -24,7 +24,7 @@ class ReleasePlugin implements Plugin<Project> {
 		plugins.<NebulaSourceJarPlugin>apply(NebulaSourceJarPlugin)
 		plugins.<NebulaMavenPublishingPlugin>apply(NebulaMavenPublishingPlugin)
 
-		val release = tasks.create(RELEASE_TASK_NAME) [
+		tasks.create(RELEASE_TASK_NAME) [
 			description = "Releases archives to public repositories"
 			group = "publishing"
 		]
