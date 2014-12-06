@@ -77,7 +77,7 @@ class BintrayReleasePlugin implements Plugin<Project> {
                 		possiblePluginProjects.forEach [subProject|
 	                		val java = subProject.convention.findPlugin(JavaPluginConvention)
 	                		if (java != null) {
-								val resourceFolders = java.sourceSets.getAt("main").resources
+								val resourceFolders = java.sourceSets.getAt("main").resources.srcDirs
 								val gradlePluginsDir = resourceFolders.map[new File(it, 'META-INF/gradle-plugins')].findFirst[exists]
 								if (gradlePluginsDir != null) {
 									gradlePlugins += gradlePluginsDir.listFiles.map [
