@@ -1,19 +1,11 @@
-buildscript {
-	repositories {
-		maven { url 'http://dl.bintray.com/oehme/maven/' }
-	}
-	dependencies { classpath 'com.github.oehme.sobula:sobula:0.0.12' }
-}
-
 plugins {
 	id 'org.xtend.xtend' version '0.3.4'
+	id 'com.github.oehme.sobula.stefan' version '0.0.13'
+	id 'com.github.oehme.sobula.bintray-release' version '0.0.13'
 }
 
-apply plugin: 'com.github.oehme.sobula.stefan'
-apply plugin: 'com.github.oehme.sobula.bintray-release'
-
 group = "com.github.oehme.sobula"
-version = "0.0.13"
+version = "0.0.14"
 description = "My automated build process for Java open source libraries"
 bintray.pkg.version.mavenCentralSync.sync = false
 
