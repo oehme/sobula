@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.github.oehme.sobula"
-if (project.hasProperty("releaseVersion") {
+if (project.hasProperty("releaseVersion")) {
 	version = project.releaseVersion
 } else {
 	version = "DEV-SNAPSHOT"
