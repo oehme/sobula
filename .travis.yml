@@ -1,5 +1,5 @@
 language: java
-script: ./gradlew check && ./.travis/releaseOnTag.sh
+script: ./gradlew check && https://raw.githubusercontent.com/oehme/sobula/master/.travis/releaseOnTag.sh
 env:
   global:
   - BINTRAY_USERNAME=oehme
