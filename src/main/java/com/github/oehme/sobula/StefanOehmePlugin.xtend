@@ -17,7 +17,7 @@ class StefanOehmePlugin implements Plugin<Project> {
 			github = "oehme"
 			twitter = "StefanOehme"
 		]
-		plugins.withType(BintrayReleasePlugin) [plugin|
+		plugins.withType(BintrayReleasePlugin) [ plugin |
 			extensions.getByType(BintrayExtension) => [
 				user = "oehme"
 				pkg.version.mavenCentralSync.user = "oehme"

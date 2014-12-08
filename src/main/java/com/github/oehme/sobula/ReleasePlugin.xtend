@@ -1,5 +1,7 @@
 package com.github.oehme.sobula
 
+import com.google.common.base.Charsets
+import com.google.common.io.Files
 import nebula.plugin.contacts.BaseContactsPlugin
 import nebula.plugin.contacts.ContactsExtension
 import nebula.plugin.publishing.NebulaJavadocJarPlugin
@@ -28,19 +30,14 @@ class ReleasePlugin implements Plugin<Project> {
 			description = "Releases archives to public repositories"
 			group = "publishing"
 		]
-		
-		project.afterEvaluate[
-			if (version == null) {
-				if (project.hasProperty("releaseVersion")) {
-					version = project.property("releaseVersion")
-				} else {
-					version = "DEV-SNAPSHOT"
-				}
-			}
-		]
+
+		if (project.hasProperty("releaseVersion")) {
+			version = project.property("releaseVersion")
+			status = "release"
+		}
 
 		val publish = extensions.getByType(PublishingExtension)
-		publish.publications.withType(MavenPublication).all [
+		publish.publications.withType(MavenPublication) [
 			project.afterEvaluate [ p |
 				pom.withXml [
 					val root = asElement
@@ -64,14 +61,18 @@ class ReleasePlugin implements Plugin<Project> {
 						]
 					}
 					root => [
-						element("licenses") [
-							//TODO generalize
-							element("license") [
-								simpleElement("name", "Eclipse Public License - v 1.0")
-								simpleElement("url", "http://www.eclipse.org/org/documents/epl-v10.php")
-								simpleElement("distribution", "repo")
-							]
-						]
+						if (getElementsByTagName("licenses").length == 0) {
+							val license = project.license
+							if (license != null) {
+								element("licenses") [
+									element("license") [
+										simpleElement("name", license.longName)
+										simpleElement("url", license.url)
+										simpleElement("distribution", "repo")
+									]
+								]
+							}
+						}
 					]
 				]
 			]
@@ -80,6 +81,15 @@ class ReleasePlugin implements Plugin<Project> {
 
 	static def getGitHubUser(Project project) {
 		project.extensions.getByType(ContactsExtension).people.values.findFirst[roles.contains("owner")]?.github
+	}
+
+	static def getLicense(Project project) {
+		val licenseFile = project.file("LICENSE")
+		if (licenseFile.exists) {
+			val content = Files.toString(licenseFile, Charsets.UTF_8)
+			return License.values.findFirst[matches(content)]
+		}
+		return null
 	}
 
 	@FinalFieldsConstructor

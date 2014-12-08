@@ -3,10 +3,10 @@ package com.github.oehme.sobula
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
 import com.jfrog.bintray.gradle.BintrayUploadTask
-import java.io.File
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginConvention
+
+import static extension com.github.oehme.sobula.ReleasePlugin.*
 
 class BintrayReleasePlugin implements Plugin<Project> {
 
@@ -15,10 +15,10 @@ class BintrayReleasePlugin implements Plugin<Project> {
 		plugins.<ReleasePlugin>apply(ReleasePlugin)
 		plugins.<BintrayPlugin>apply(BintrayPlugin)
 
-		val bintrayUpload = tasks.getAt("bintrayUpload") as BintrayUploadTask
+		val bintrayUpload = bintrayUpload
 		bintrayUpload.doFirst [ upload |
 			if (project != rootProject) {
-				val rootBintrayUpload = rootProject.tasks.getAt("bintrayUpload") as BintrayUploadTask
+				val rootBintrayUpload = rootProject.bintrayUpload
 				val isMultiProjectUpload = gradle.taskGraph.hasTask(rootBintrayUpload)
 				if (isMultiProjectUpload) {
 					bintrayUpload.syncToMavenCentral = false
@@ -26,9 +26,10 @@ class BintrayReleasePlugin implements Plugin<Project> {
 				}
 			}
 		]
+		
 		tasks.getAt(ReleasePlugin.RELEASE_TASK_NAME).dependsOn(bintrayUpload)
 
-		val bintray = extensions.getByType(BintrayExtension) => [
+		bintray => [
 			if (project.hasProperty("bintrayUsername")) {
 				user = project.properties.get("bintrayUsername").toString
 			}
@@ -40,8 +41,6 @@ class BintrayReleasePlugin implements Plugin<Project> {
 			pkg => [
 				repo = "maven"
 				publicDownloadNumbers = true
-				//TODO generalize
-				licenses = "EPL-1.0"
 				attributes = newHashMap
 				version => [
 					gpg.sign = true
@@ -64,37 +63,32 @@ class BintrayReleasePlugin implements Plugin<Project> {
 				pkg => [
 					name = name ?: project.name
 					desc = desc ?: project.description ?: ""
-					val gitHubUser = ReleasePlugin.getGitHubUser(project)
+					val gitHubUser = project.gitHubUser
 					if (gitHubUser != null) {
 						websiteUrl = websiteUrl ?: '''https://github.com/«gitHubUser»/«project.rootProject.name»'''
 						issueTrackerUrl = issueTrackerUrl ?: '''https://github.com/«gitHubUser»/«project.rootProject.name»/issues'''
 						vcsUrl = vcsUrl ?: '''https://github.com/«gitHubUser»/«project.rootProject.name».git'''
 					}
+					if (licenses == null || licenses.isEmpty) {
+						val license = project.license
+						if (license != null) {
+							licenses = license.id
+						}
+					}
 					version => [
 						name = name ?: project.version.toString
                 		vcsTag = vcsTag ?: project.version.toString
-                		
-                		val possiblePluginProjects = project.subprojects + #[project]
-                		val gradlePlugins = newHashSet
-                		possiblePluginProjects.forEach [subProject|
-	                		val java = subProject.convention.findPlugin(JavaPluginConvention)
-	                		if (java != null) {
-								val resourceFolders = java.sourceSets.getAt("main").resources.srcDirs
-								val gradlePluginsDir = resourceFolders.map[new File(it, 'META-INF/gradle-plugins')].findFirst[exists]
-								if (gradlePluginsDir != null) {
-									gradlePlugins += gradlePluginsDir.listFiles.map [
-										val pluginName = name.replace(".properties", "")
-										'''«pluginName»:«subProject.group»:«subProject.name»'''
-									]
-								}
-	                		}
-                		]
-						if (!gradlePlugins.isEmpty) {
-							attributes.put("gradle-plugin", gradlePlugins)
-						}
 					]
 				]
 			]
 		]
+	}
+	
+	private def bintray(Project it) {
+		extensions.getByType(BintrayExtension)
+	}
+	
+	private def bintrayUpload(Project it) {
+		tasks.getAt("bintrayUpload") as BintrayUploadTask
 	}
 }
