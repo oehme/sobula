@@ -28,6 +28,16 @@ class ReleasePlugin implements Plugin<Project> {
 			description = "Releases archives to public repositories"
 			group = "publishing"
 		]
+		
+		project.afterEvaluate[
+			if (version == null) {
+				if (project.hasProperty("releaseVersion")) {
+					version = project.property("releaseVersion")
+				} else {
+					version = "DEV-SNAPSHOT"
+				}
+			}
+		]
 
 		val publish = extensions.getByType(PublishingExtension)
 		publish.publications.withType(MavenPublication).all [

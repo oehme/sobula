@@ -48,9 +48,11 @@ class BintrayReleasePlugin implements Plugin<Project> {
 					if (project.hasProperty("signing.password")) {
 						gpg.passphrase = project.property("signing.password").toString
 					}
-					if (project.hasProperty('sonatypeUsername') && project.hasProperty('sonatypePassword')) {
-						mavenCentralSync.sync = true
+					mavenCentralSync.sync = true
+					if (project.hasProperty('sonatypeUsername')) {
 						mavenCentralSync.user = project.property("sonatypeUsername").toString
+					}
+					if (project.hasProperty('sonatypePassword')) {
 						mavenCentralSync.password = project.property("sonatypePassword").toString
 					}
 					attributes = newHashMap

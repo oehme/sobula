@@ -5,6 +5,7 @@ import nebula.plugin.contacts.Contact
 import nebula.plugin.contacts.ContactsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import com.jfrog.bintray.gradle.BintrayExtension
 
 class StefanOehmePlugin implements Plugin<Project> {
 	override apply(Project it) {
@@ -15,6 +16,12 @@ class StefanOehmePlugin implements Plugin<Project> {
 			roles = "owner"
 			github = "oehme"
 			twitter = "StefanOehme"
+		]
+		plugins.withType(BintrayReleasePlugin) [plugin|
+			extensions.getByType(BintrayExtension) => [
+				user = "oehme"
+				pkg.version.mavenCentralSync.user = "oehme"
+			]
 		]
 	}
 }
