@@ -1,6 +1,4 @@
 language: java
+jdk:
+  - openjdk6
 after_success: ./.travis/releaseOnTag.sh
-env:
-  global:
-  - secure: OiealYgHsQq4SqWpSHq7iSaaDg4wKAj2M7E8/l38lF32ULHwq59zoJI8PvT+kZU7odF4B4kZhhVAPEQAl9HxtmezyU2LWI2vsqGs+jFvjdAIaAlenEt1bApyMw4WCoTrcgjBXCInYqiTftRSTe5XTPHsQ3AjEysOB5h5SKJIu4U=
-  - secure: igk/MRoV6OldrExDWhDfesdr3R1VIyUyByzwGlIB3KvSJW0v2JNUO3bhoi/7k32MGzChzWlVh3FbE3fcLe+JmtHoB/MhK8GRaguLA2Dh9kL8zmrzYzG8dH+trLPbcy1IuGW+0dJTBw1da9sw8jt5e2zZY4qmzP4TH0W3fkLbKG4=
