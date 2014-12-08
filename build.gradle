@@ -1,7 +1,7 @@
 plugins {
 	id 'org.xtend.xtend' version '0.3.4'
-	id 'com.github.oehme.sobula.stefan' version '0.1.1'
-	id 'com.github.oehme.sobula.bintray-release' version '0.1.1'
+	id 'com.github.oehme.sobula.stefan' version '0.2.0'
+	id 'com.github.oehme.sobula.plugin-dev' version '0.2.0'
 }
 
 group = "com.github.oehme.sobula"
@@ -9,10 +9,6 @@ description = "My automated build process for Java open source libraries"
 bintray.pkg.version.mavenCentralSync.sync = false
 
 repositories.jcenter()
-
-if (project.hasProperty("releaseVersion")) {		
-	version = project.releaseVersion
-}
 
 dependencies {
 	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:[2.7,2.8)'
