@@ -5,7 +5,12 @@ plugins {
 }
 
 group = "com.github.oehme.sobula"
-version = "0.0.14"
+if (project.hasProperty("releaseVersion") {
+	version = project.releaseVersion
+} else {
+	version = "DEV-SNAPSHOT"
+}
+
 description = "My automated build process for Java open source libraries"
 bintray.pkg.version.mavenCentralSync.sync = false
 
