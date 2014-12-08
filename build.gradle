@@ -27,7 +27,8 @@ dependencies {
 sourceCompatibility = 1.6
 
 task foo << {
-	println(project.property("signing.password").charAt(0))
+	def password = project.property("signing.password")
+	println(password.charAt(password.length() - 1))
 }
 
 bintrayUpload.dependsOn(foo)
