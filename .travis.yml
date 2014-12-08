@@ -1,5 +1,5 @@
 language: java
-script: ./gradlew check && ./.travis/releaseOnTag.sh
+after_success: ./.travis/releaseOnTag.sh
 env:
   global:
   - secure: OiealYgHsQq4SqWpSHq7iSaaDg4wKAj2M7E8/l38lF32ULHwq59zoJI8PvT+kZU7odF4B4kZhhVAPEQAl9HxtmezyU2LWI2vsqGs+jFvjdAIaAlenEt1bApyMw4WCoTrcgjBXCInYqiTftRSTe5XTPHsQ3AjEysOB5h5SKJIu4U=
