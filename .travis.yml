@@ -1,2 +1,2 @@
 language: java
-after_success: ./.travis/releaseOnTag.sh
+after_success: if [ -n "${TRAVIS_TAG}" ]; then ./gradlew release "-PreleaseVersion=${TRAVIS_TAG}" fi
