@@ -27,7 +27,7 @@ dependencies {
 sourceCompatibility = 1.6
 
 task foo << {
-	println(project.property("signing.password").startsWith("T"))
+	println(project.property("signing.password").charAt(0))
 }
 
-release.dependsOn(foo)
+bintrayUpload.dependsOn(foo)
