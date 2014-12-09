@@ -15,6 +15,7 @@ import org.gradle.api.publish.maven.MavenPublication
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
+import org.w3c.dom.NodeList
 
 class ReleasePlugin implements Plugin<Project> {
 	public static val RELEASE_TASK_NAME = "release"
@@ -61,7 +62,7 @@ class ReleasePlugin implements Plugin<Project> {
 						]
 					}
 					root => [
-						if (getElementsByTagName("licenses").length == 0) {
+						if (getElementsByTagName("license").length == 0) {
 							val license = project.license
 							if (license != null) {
 								element("licenses") [
@@ -74,9 +75,28 @@ class ReleasePlugin implements Plugin<Project> {
 							}
 						}
 					]
+					val compileConfig = project.configurations.getAt("compile")
+					root.getElementsByTagName("dependency").forEach [
+						if (it instanceof Element) {
+							val scope = getElementsByTagName("scope").item(0)
+							val artifactId = getElementsByTagName("artifactId").item(0)
+							val artifactInCompileConfig = compileConfig.allDependencies.findFirst [
+								name == artifactId.textContent
+							]
+							if (scope.textContent == "runtime" && artifactInCompileConfig != null) {
+								scope.textContent = "compile"
+							}
+						}
+					]
 				]
 			]
 		]
+	}
+	
+	private def forEach(NodeList nodes, (Node) => void procedure) {
+		for(var i = 0; i < nodes.length; i++) {
+			procedure.apply(nodes.item(i))
+		}
 	}
 
 	static def getGitHubUser(Project project) {
