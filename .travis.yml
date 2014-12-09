@@ -1,2 +1,2 @@
 language: java
-after_success: ./.travis/releaseOnTag.sh
+script: ./gradlew check && ./.travis/releaseOnTag.sh

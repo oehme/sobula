@@ -1,7 +1,7 @@
 plugins {
 	id 'org.xtend.xtend' version '0.3.4'
-	id 'com.github.oehme.sobula.stefan' version '0.2.0'
-	id 'com.github.oehme.sobula.plugin-dev' version '0.2.0'
+	id 'com.github.oehme.sobula.stefan' version '0.3.0'
+	id 'com.github.oehme.sobula.plugin-dev' version '0.3.0'
 }
 
 group = "com.github.oehme.sobula"
