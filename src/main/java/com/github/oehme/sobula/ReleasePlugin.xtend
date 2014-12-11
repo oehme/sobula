@@ -104,7 +104,7 @@ class ReleasePlugin implements Plugin<Project> {
 	}
 
 	static def getLicense(Project project) {
-		val licenseFile = project.file("LICENSE")
+		val licenseFile = rootProject.file("LICENSE")
 		if (licenseFile.exists) {
 			val content = Files.toString(licenseFile, Charsets.UTF_8)
 			return License.values.findFirst[matches(content)]
