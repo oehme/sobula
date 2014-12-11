@@ -1,4 +1,5 @@
 plugins {
+	id 'java-gradle-plugin'
 	id 'org.xtend.xtend' version '0.3.4'
 	id 'com.github.oehme.sobula.stefan' version '0.3.0'
 	id 'com.github.oehme.sobula.plugin-dev' version '0.3.0'
@@ -15,7 +16,6 @@ dependencies {
 	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
 	compile 'com.netflix.nebula:gradle-contacts-plugin:2.0.+'
 	compile 'com.netflix.nebula:nebula-publishing-plugin:2.0.+'
-	compile gradleApi()
 }
 
 sourceCompatibility = 1.6
