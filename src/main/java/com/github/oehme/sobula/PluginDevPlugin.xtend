@@ -5,10 +5,12 @@ import java.io.File
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.devel.plugins.JavaGradlePluginPlugin
 
 class PluginDevPlugin implements Plugin<Project> {
 
 	override apply(Project project) {
+		project.plugins.<JavaGradlePluginPlugin>apply(JavaGradlePluginPlugin)
 		project.plugins.<BintrayReleasePlugin>apply(BintrayReleasePlugin)
 		project.afterEvaluate [
 			extensions.getByType(BintrayExtension) => [
