@@ -1,12 +1,12 @@
 plugins {
 	id 'java-gradle-plugin'
 	id 'org.xtend.xtend' version '0.3.4'
-	id 'com.github.oehme.sobula.stefan' version '0.3.0'
-	id 'com.github.oehme.sobula.plugin-dev' version '0.3.0'
+	id 'com.github.oehme.sobula.stefan' version '0.4.0'
+	id 'com.github.oehme.sobula.plugin-dev' version '0.4.0'
 }
 
 group = "com.github.oehme.sobula"
-description = "My automated build process for Java open source libraries"
+description = "Gradle plugins to automate the build and release of Java projects."
 bintray.pkg.version.mavenCentralSync.sync = false
 
 repositories.jcenter()
