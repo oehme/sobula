@@ -12,7 +12,7 @@ Add the required information to your build script. See the description below for
 ```groovy
 plugins {
 	id 'java'
-	id 'com.github.oehme.sobula.bintray-release' version '0.4.0'
+	id 'com.github.oehme.sobula.bintray-release' version '0.4.1'
 }
 
 group = "my.group.id"
