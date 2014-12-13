@@ -2,7 +2,7 @@ plugins {
 	id 'java-gradle-plugin'
 	id 'org.xtend.xtend' version '0.3.4'
 	id 'com.github.oehme.sobula.stefan' version '0.4.0'
-	id 'com.github.oehme.sobula.plugin-dev' version '0.4.0'
+	id 'com.github.oehme.sobula.plugin-release' version '0.4.0'
 }
 
 group = "com.github.oehme.sobula"
