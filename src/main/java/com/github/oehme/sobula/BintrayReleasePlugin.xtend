@@ -89,6 +89,6 @@ class BintrayReleasePlugin implements Plugin<Project> {
 	}
 	
 	private def bintrayUpload(Project it) {
-		tasks.getAt("bintrayUpload") as BintrayUploadTask
+		tasks.findByName("bintrayUpload") as BintrayUploadTask
 	}
 }
