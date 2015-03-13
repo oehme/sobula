@@ -16,6 +16,7 @@ import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
+import org.gradle.api.plugins.JavaPlugin
 
 class ReleasePlugin implements Plugin<Project> {
 	public static val RELEASE_TASK_NAME = "release"
@@ -75,18 +76,20 @@ class ReleasePlugin implements Plugin<Project> {
 							}
 						}
 					]
-					val compileConfig = project.configurations.getAt("compile")
-					root.getElementsByTagName("dependency").forEach [
-						if (it instanceof Element) {
-							val scope = getElementsByTagName("scope").item(0)
-							val artifactId = getElementsByTagName("artifactId").item(0)
-							val artifactInCompileConfig = compileConfig.allDependencies.findFirst [
-								name == artifactId.textContent
-							]
-							if (scope.textContent == "runtime" && artifactInCompileConfig != null) {
-								scope.textContent = "compile"
+					project.plugins.withType(JavaPlugin) [
+						val compileConfig = project.configurations.getAt("compile")
+						root.getElementsByTagName("dependency").forEach [
+							if (it instanceof Element) {
+								val scope = getElementsByTagName("scope").item(0)
+								val artifactId = getElementsByTagName("artifactId").item(0)
+								val artifactInCompileConfig = compileConfig.allDependencies.findFirst [
+									name == artifactId.textContent
+								]
+								if (scope.textContent == "runtime" && artifactInCompileConfig != null) {
+									scope.textContent = "compile"
+								}
 							}
-						}
+						]
 					]
 				]
 			]

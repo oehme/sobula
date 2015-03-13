@@ -15,8 +15,7 @@ class PluginReleasePlugin implements Plugin<Project> {
 				pkg => [
 					version => [
 						if (!attributes.containsKey("gradle-plugin")) {
-							val possiblePluginProjects = project.subprojects + #[project]
-							val gradlePlugins = possiblePluginProjects.map[gradlePluginDefinitions].flatten.toSet
+							val gradlePlugins = project.allprojects.map[gradlePluginDefinitions].flatten.toSet
 							if (!gradlePlugins.isEmpty) {
 								attributes.put("gradle-plugin", gradlePlugins)
 							}

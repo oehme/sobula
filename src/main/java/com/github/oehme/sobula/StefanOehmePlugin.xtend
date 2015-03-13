@@ -13,7 +13,7 @@ class StefanOehmePlugin implements Plugin<Project> {
 		val contacts = project.extensions.getByType(ContactsExtension)
 		contacts.addPerson("st.oehme@gmail.com") as Contact => [
 			moniker = "Stefan Oehme"
-			roles = "owner"
+			roles = #{"owner"}
 			github = "oehme"
 			twitter = "StefanOehme"
 		]
