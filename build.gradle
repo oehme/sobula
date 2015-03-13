@@ -1,8 +1,8 @@
 plugins {
 	id 'java-gradle-plugin'
 	id 'org.xtend.xtend' version '0.3.4'
-	id 'com.github.oehme.sobula.stefan' version '0.4.0'
-	id 'com.github.oehme.sobula.plugin-release' version '0.4.0'
+	id 'com.github.oehme.sobula.stefan' version '0.4.1'
+	id 'com.github.oehme.sobula.plugin-release' version '0.4.1'
 }
 
 group = "com.github.oehme.sobula"
@@ -13,9 +13,9 @@ repositories.jcenter()
 
 dependencies {
 	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:[2.7,2.8)'
-	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
-	compile 'com.netflix.nebula:gradle-contacts-plugin:2.0.+'
-	compile 'com.netflix.nebula:nebula-publishing-plugin:2.0.+'
+	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1'
+	compile 'com.netflix.nebula:gradle-contacts-plugin:2.2.+'
+	compile 'com.netflix.nebula:nebula-publishing-plugin:2.2.+'
 }
 
 sourceCompatibility = 1.6
