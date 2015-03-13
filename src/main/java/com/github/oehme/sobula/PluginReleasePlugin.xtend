@@ -11,17 +11,22 @@ class PluginReleasePlugin implements Plugin<Project> {
 	override apply(Project project) {
 		project.plugins.<BintrayReleasePlugin>apply(BintrayReleasePlugin)
 		project.afterEvaluate [
-			extensions.getByType(BintrayExtension) => [
-				pkg => [
-					version => [
-						if (!attributes.containsKey("gradle-plugin")) {
-							val gradlePlugins = project.allprojects.map[gradlePluginDefinitions].flatten.toSet
-							if (!gradlePlugins.isEmpty) {
-								attributes.put("gradle-plugin", gradlePlugins)
-							}
-						}
+			val gradlePlugins = allprojects.map[gradlePluginDefinitions].flatten.toSet
+			allprojects.forEach[
+				val bintray = extensions.findByType(BintrayExtension)
+				if (bintray != null) {
+					bintray => [
+						pkg => [
+							version => [
+								if (!attributes.containsKey("gradle-plugin")) {
+									if (!gradlePlugins.isEmpty) {
+										attributes.put("gradle-plugin", gradlePlugins)
+									}
+								}
+							]
+						]
 					]
-				]
+				}
 			]
 		]
 	}
