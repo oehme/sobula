@@ -57,16 +57,17 @@ class ReleasePlugin implements Plugin<Project> {
 				group = "build"	
 				classifier = "javadoc"
 			]
-			
 			publish.publications.create("mavenJava", MavenPublication) => [
-				from(project.components.getByName("java"))
+				project.afterEvaluate[p|
+					from(project.components.getByName("java"))
+				]
 				artifact(sourceJar)
 				artifact(javadocJar)
 			]
 		]
 		
-		publish.publications.withType(MavenPublication) [
-			project.afterEvaluate [ p |
+		project.afterEvaluate[p|
+			publish.publications.withType(MavenPublication) [
 				groupId = p.group.toString
 				artifactId = p.name
 				version = p.version.toString
