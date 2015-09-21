@@ -7,6 +7,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 import static extension com.github.oehme.sobula.ReleasePlugin.*
+import org.gradle.api.plugins.JavaPlugin
 
 class BintrayReleasePlugin implements Plugin<Project> {
 
@@ -36,7 +37,9 @@ class BintrayReleasePlugin implements Plugin<Project> {
 			if (project.hasProperty("bintrayApiKey")) {
 				key = project.properties.get("bintrayApiKey").toString
 			}
-			publications = "mavenNebula"
+			project.plugins.withType(JavaPlugin)[java|
+				publications = "mavenJava"
+			]
 			publish = true
 			pkg => [
 				repo = "maven"
@@ -58,6 +61,7 @@ class BintrayReleasePlugin implements Plugin<Project> {
 				]
 			]
 		]
+		
 		afterEvaluate[
 			bintray => [
 				pkg => [
