@@ -49,22 +49,20 @@ class ReleasePlugin implements Plugin<Project> {
 			val sourceJar = project.tasks.create("sourceJar", Jar) [
 				from(java.sourceSets.getAt("main").allSource)
 				group = "build"	
+				classifier = "sources"
 			]
 			
 			val javadoc = project.tasks.getByName('javadoc') as Javadoc
 			val javadocJar = project.tasks.create("javadocJar", Jar) [
 				from(javadoc)
 				group = "build"	
+				classifier = "javadoc"
 			]
 			
 			publish.publications.create("mavenJava", MavenPublication) => [
 				from(project.components.getByName("java"))
-				artifact(sourceJar) [
-					classifier = "sources"
-				]
-				artifact(javadocJar) [
-					classifier = "javadoc"
-				]
+				artifact(sourceJar)
+				artifact(javadocJar)
 			]
 		]
 		
