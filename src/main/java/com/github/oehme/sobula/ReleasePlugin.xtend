@@ -4,7 +4,6 @@ import com.google.common.base.Charsets
 import com.google.common.io.Files
 import nebula.plugin.contacts.BaseContactsPlugin
 import nebula.plugin.contacts.ContactsExtension
-import nebula.plugin.publishing.maven.PomDevelopersPlugin
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -18,6 +17,7 @@ import org.gradle.api.tasks.javadoc.Javadoc
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
+import org.w3c.dom.NodeList
 
 class ReleasePlugin implements Plugin<Project> {
 	public static val RELEASE_TASK_NAME = "release"
@@ -26,7 +26,6 @@ class ReleasePlugin implements Plugin<Project> {
 		val it = project
 		plugins.<MavenPublishPlugin>apply(MavenPublishPlugin)
 		plugins.<BaseContactsPlugin>apply(BaseContactsPlugin)
-		plugins.<PomDevelopersPlugin>apply(PomDevelopersPlugin)
 
 		tasks.create(RELEASE_TASK_NAME) [
 			description = "Releases archives to public repositories"
@@ -67,45 +66,99 @@ class ReleasePlugin implements Plugin<Project> {
 		]
 		
 		publish.publications.withType(MavenPublication) [
-			pom.withXml [
-				val root = asElement
-				val extension builder = new DocumentBuilder(root.ownerDocument)
-				val gitHubUser = project.gitHubUser
-				if (gitHubUser != null) {
-					val gitHubProject = project.rootProject.name
-					val connection = '''scm:git@github.com:«gitHubUser»/«gitHubProject».git'''
-					val url = '''https://github.com/«gitHubUser»/«gitHubProject»'''
-					root => [
-						simpleElement("url", url)
-						element("scm") [
-							simpleElement("connection", connection)
-							simpleElement("developerConnection", connection)
+			project.afterEvaluate [ p |
+				groupId = p.group.toString
+				artifactId = p.name
+				version = p.version.toString
+				
+				pom.withXml [
+					val root = asElement
+					val extension builder = new DocumentBuilder(root.ownerDocument)
+					
+					val gitHubUser = project.gitHubUser
+					if (gitHubUser != null) {
+						val gitHubProject = project.rootProject.name
+						val connection = '''scm:git@github.com:«gitHubUser»/«gitHubProject».git'''
+						val url = '''https://github.com/«gitHubUser»/«gitHubProject»'''
+						root => [
 							simpleElement("url", url)
+							element("scm") [
+								simpleElement("connection", connection)
+								simpleElement("developerConnection", connection)
+								simpleElement("url", url)
+							]
+							element("issueManagement") [
+								simpleElement("system", "GitHub Issues")
+								simpleElement("url", '''«url»/issues''')
+							]
 						]
-						element("issueManagement") [
-							simpleElement("system", "GitHub Issues")
-							simpleElement("url", '''«url»/issues''')
-						]
-					]
-				}
-				root => [
-					if (getElementsByTagName("license").length == 0) {
-						val license = project.license
-						if (license != null) {
-							element("licenses") [
-								element("license") [
-									simpleElement("name", license.longName)
-									simpleElement("url", license.url)
-									simpleElement("distribution", "repo")
+					}
+					
+					root => [
+						simpleElement("description", project.description ?: "")
+						val contacts = project.extensions.getByType(ContactsExtension).people.values
+						if (!contacts.isEmpty) {
+							element("developers") [
+								contacts.forEach[contact|
+									element("developer") [
+										val contactId = contact.github ?: contact.twitter
+										if (contactId != null)
+											simpleElement("id", contactId)
+										if (contact.moniker != null)
+											simpleElement("name", contact.moniker)
+										simpleElement("email", contact.email)
+										if (!contact.roles.isEmpty) {
+											element("roles")[
+												contact.roles.forEach[role|
+													simpleElement("role", role)
+												]
+											]
+										}
+									]
 								]
 							]
 						}
-					}
-				]
+						if (getElementsByTagName("license").length == 0) {
+							val license = project.license
+							if (license != null) {
+								element("licenses") [
+									element("license") [
+										simpleElement("name", license.longName)
+										simpleElement("url", license.url)
+										simpleElement("distribution", "repo")
+									]
+								]
+							}
+						}
+						
+					]
+					
+					project.plugins.withType(JavaPlugin) [
+						val compileConfig = project.configurations.getAt("compile")
+						root.getElementsByTagName("dependency").forEach [
+							if (it instanceof Element) {
+								val scope = getElementsByTagName("scope").item(0)
+								val artifactId = getElementsByTagName("artifactId").item(0)
+								val artifactInCompileConfig = compileConfig.allDependencies.findFirst [
+									name == artifactId.textContent
+								]
+								if (scope.textContent == "runtime" && artifactInCompileConfig != null) {
+									scope.textContent = "compile"
+								}
+							}
+						]
+					]
+				]				
 			]
 		]
 	}
 	
+	private def forEach(NodeList nodes, (Node) => void procedure) {
+		for(var i = 0; i < nodes.length; i++) {
+			procedure.apply(nodes.item(i))
+		}
+	}
+
 	static def getGitHubUser(Project project) {
 		project.extensions.getByType(ContactsExtension).people.values.findFirst[roles.contains("owner")]?.github
 	}

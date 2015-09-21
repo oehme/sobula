@@ -15,7 +15,6 @@ dependencies {
 	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.8.4'
 	compile 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.3.1'
 	compile 'com.netflix.nebula:gradle-contacts-plugin:2.2.0'
-	compile 'com.netflix.nebula:nebula-publishing-plugin:2.2.0'
 }
 
 sourceCompatibility = 1.6
