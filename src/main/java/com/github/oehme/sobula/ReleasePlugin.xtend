@@ -96,6 +96,7 @@ class ReleasePlugin implements Plugin<Project> {
 					}
 					
 					root => [
+						simpleElement("name", project.name)
 						simpleElement("description", project.description ?: "")
 						val contacts = project.extensions.getByType(ContactsExtension).people.values
 						if (!contacts.isEmpty) {
