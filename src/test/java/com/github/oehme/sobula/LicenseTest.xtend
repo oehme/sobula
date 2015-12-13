@@ -8,13 +8,19 @@
 
 package com.github.oehme.sobula;
 
-import org.junit.Test;
+import org.junit.Test
+
 import static org.junit.Assert.*
 
 /**
  * @author kuniss@grammarcraft.de
  */
 public class LicenseTest {
+
+    def assertOnlyMatchedBy(License license, String licenseText) {
+        assertTrue(license.matches(licenseText))
+        License.values.filter[it != license].forEach[assertFalse(matches(licenseText))]
+    }
 
 	@Test
 	def void match_Eclipse10_license() {
@@ -28,15 +34,7 @@ public class LicenseTest {
             "Contribution" means:
             ...
         '''
-		assertTrue(License.EPL_V1_0.matches(licenseText))
-		
-        assertFalse(License.AGPL_V3_0.matches(licenseText))
-		assertFalse(License.APACHE_V2_0.matches(licenseText))
-        assertFalse(License.GPL_V2_0.matches(licenseText))
-        assertFalse(License.GPL_V3_0.matches(licenseText))
-        assertFalse(License.LGPL_V2_1.matches(licenseText))
-        assertFalse(License.LGPL_V3_0.matches(licenseText))
-        assertFalse(License.MIT.matches(licenseText))
+        assertOnlyMatchedBy(License.EPL_V1_0, licenseText)
 	}
 
     @Test
@@ -51,15 +49,7 @@ public class LicenseTest {
             1. Definitions.
             ...
         '''
-        assertTrue(License.APACHE_V2_0.matches(licenseText))
-        
-        assertFalse(License.AGPL_V3_0.matches(licenseText))
-        assertFalse(License.EPL_V1_0.matches(licenseText))
-        assertFalse(License.GPL_V2_0.matches(licenseText))
-        assertFalse(License.GPL_V3_0.matches(licenseText))
-        assertFalse(License.LGPL_V2_1.matches(licenseText))
-        assertFalse(License.LGPL_V3_0.matches(licenseText))
-        assertFalse(License.MIT.matches(licenseText))
+        assertOnlyMatchedBy(License.APACHE_V2_0, licenseText)
     }
 
     @Test
@@ -78,17 +68,17 @@ public class LicenseTest {
             
             The above copyright notice and this permission notice shall be included in
             all copies or substantial portions of the Software.
-            ...
+            
+            
+            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+            THE SOFTWARE.
         '''
-        assertTrue(License.MIT.matches(licenseText))
-        
-        assertFalse(License.AGPL_V3_0.matches(licenseText))
-        assertFalse(License.APACHE_V2_0.matches(licenseText))
-        assertFalse(License.EPL_V1_0.matches(licenseText))
-        assertFalse(License.GPL_V2_0.matches(licenseText))
-        assertFalse(License.GPL_V3_0.matches(licenseText))
-        assertFalse(License.LGPL_V2_1.matches(licenseText))
-        assertFalse(License.LGPL_V3_0.matches(licenseText))
+        assertOnlyMatchedBy(License.MIT, licenseText)
     }
 
     @Test
@@ -109,15 +99,7 @@ public class LicenseTest {
               0. Additional Definitions.
             ...
         '''
-        assertTrue(License.LGPL_V3_0.matches(licenseText))
-        
-        assertFalse(License.AGPL_V3_0.matches(licenseText))
-        assertFalse(License.APACHE_V2_0.matches(licenseText))
-        assertFalse(License.EPL_V1_0.matches(licenseText))
-        assertFalse(License.GPL_V2_0.matches(licenseText))
-        assertFalse(License.GPL_V3_0.matches(licenseText))
-        assertFalse(License.LGPL_V2_1.matches(licenseText))
-        assertFalse(License.MIT.matches(licenseText))
+        assertOnlyMatchedBy(License.LGPL_V3_0, licenseText)
     }
 
     @Test
@@ -133,15 +115,7 @@ public class LicenseTest {
                                         Preamble
             ...
         '''
-        assertTrue(License.GPL_V3_0.matches(licenseText))
-        
-        assertFalse(License.AGPL_V3_0.matches(licenseText))
-        assertFalse(License.APACHE_V2_0.matches(licenseText))
-        assertFalse(License.EPL_V1_0.matches(licenseText))
-        assertFalse(License.GPL_V2_0.matches(licenseText))
-        assertFalse(License.LGPL_V2_1.matches(licenseText))
-        assertFalse(License.LGPL_V3_0.matches(licenseText))
-        assertFalse(License.MIT.matches(licenseText))
+        assertOnlyMatchedBy(License.GPL_V3_0, licenseText)
     }
 
 
@@ -163,15 +137,7 @@ public class LicenseTest {
                                         Preamble
             ...
         '''
-        assertTrue(License.LGPL_V2_1.matches(licenseText))
-        
-        assertFalse(License.AGPL_V3_0.matches(licenseText))
-        assertFalse(License.APACHE_V2_0.matches(licenseText))
-        assertFalse(License.EPL_V1_0.matches(licenseText))
-        assertFalse(License.GPL_V2_0.matches(licenseText))
-        assertFalse(License.GPL_V3_0.matches(licenseText))
-        assertFalse(License.LGPL_V3_0.matches(licenseText))
-        assertFalse(License.MIT.matches(licenseText))
+        assertOnlyMatchedBy(License.LGPL_V2_1, licenseText)
     }
 
     @Test
@@ -188,15 +154,7 @@ public class LicenseTest {
                                         Preamble
             ...
         '''
-        assertTrue(License.GPL_V2_0.matches(licenseText))
-        
-        assertFalse(License.AGPL_V3_0.matches(licenseText))
-        assertFalse(License.APACHE_V2_0.matches(licenseText))
-        assertFalse(License.EPL_V1_0.matches(licenseText))
-        assertFalse(License.GPL_V3_0.matches(licenseText))
-        assertFalse(License.LGPL_V2_1.matches(licenseText))
-        assertFalse(License.LGPL_V3_0.matches(licenseText))
-        assertFalse(License.MIT.matches(licenseText))
+        assertOnlyMatchedBy(License.GPL_V2_0, licenseText)
     }
 
     @Test
@@ -212,15 +170,7 @@ public class LicenseTest {
                                         Preamble
             ...
         '''
-        assertTrue(License.AGPL_V3_0.matches(licenseText))
-        
-        assertFalse(License.APACHE_V2_0.matches(licenseText))
-        assertFalse(License.EPL_V1_0.matches(licenseText))
-        assertFalse(License.GPL_V2_0.matches(licenseText))
-        assertFalse(License.GPL_V3_0.matches(licenseText))
-        assertFalse(License.LGPL_V2_1.matches(licenseText))
-        assertFalse(License.LGPL_V3_0.matches(licenseText))
-        assertFalse(License.MIT.matches(licenseText))
+        assertOnlyMatchedBy(License.AGPL_V3_0, licenseText)
     }
 
 }
