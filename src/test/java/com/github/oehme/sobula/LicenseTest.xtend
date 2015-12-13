@@ -17,7 +17,7 @@ import static org.junit.Assert.*
  */
 public class LicenseTest {
 
-    def assertOnlyMatchedBy(License license, String licenseText) {
+    private def onlyMatchedBy(String licenseText, License license) {
         assertTrue(license.matches(licenseText))
         License.values.filter[it != license].forEach[assertFalse(matches(licenseText))]
     }
@@ -34,7 +34,7 @@ public class LicenseTest {
             "Contribution" means:
             ...
         '''
-        assertOnlyMatchedBy(License.EPL_V1_0, licenseText)
+        licenseText.onlyMatchedBy(License.EPL_V1_0)
 	}
 
     @Test
@@ -49,7 +49,7 @@ public class LicenseTest {
             1. Definitions.
             ...
         '''
-        assertOnlyMatchedBy(License.APACHE_V2_0, licenseText)
+        licenseText.onlyMatchedBy(License.APACHE_V2_0)
     }
 
     @Test
@@ -78,7 +78,7 @@ public class LicenseTest {
             OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
             THE SOFTWARE.
         '''
-        assertOnlyMatchedBy(License.MIT, licenseText)
+        licenseText.onlyMatchedBy(License.MIT)
     }
 
     @Test
@@ -99,7 +99,7 @@ public class LicenseTest {
               0. Additional Definitions.
             ...
         '''
-        assertOnlyMatchedBy(License.LGPL_V3_0, licenseText)
+        licenseText.onlyMatchedBy(License.LGPL_V3_0)
     }
 
     @Test
@@ -115,7 +115,7 @@ public class LicenseTest {
                                         Preamble
             ...
         '''
-        assertOnlyMatchedBy(License.GPL_V3_0, licenseText)
+        licenseText.onlyMatchedBy(License.GPL_V3_0)
     }
 
 
@@ -137,7 +137,7 @@ public class LicenseTest {
                                         Preamble
             ...
         '''
-        assertOnlyMatchedBy(License.LGPL_V2_1, licenseText)
+        licenseText.onlyMatchedBy(License.LGPL_V2_1)
     }
 
     @Test
@@ -154,7 +154,7 @@ public class LicenseTest {
                                         Preamble
             ...
         '''
-        assertOnlyMatchedBy(License.GPL_V2_0, licenseText)
+        licenseText.onlyMatchedBy(License.GPL_V2_0)
     }
 
     @Test
@@ -170,7 +170,7 @@ public class LicenseTest {
                                         Preamble
             ...
         '''
-        assertOnlyMatchedBy(License.AGPL_V3_0, licenseText)
+        licenseText.onlyMatchedBy(License.AGPL_V3_0)
     }
 
 }
