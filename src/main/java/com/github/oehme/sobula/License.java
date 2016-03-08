@@ -95,6 +95,7 @@ public enum License {
 	public boolean matches(String licenseText) {
 		if (licenseText.contains(longName))
 			return true;
+		licenseText = normalizeEOL(licenseText);
 		for (String recognitionPattern : recognitionPatterns) {
 			Pattern pattern = Pattern.compile(recognitionPattern);
 			if (pattern.matcher(licenseText).find())
@@ -102,6 +103,18 @@ public enum License {
 		}
 		return false;
 		
+	}
+	
+	/**
+	 * Normalizes Windows and Mac EOL to Linux EOL.
+	 * @param originalText the original text
+	 * @return the normalized text
+	 */
+	private String normalizeEOL(String originalText) {
+		// for Windows
+		String result = originalText.replaceAll("\\r\\n", "\n");
+		// for Mac
+		return result.replaceAll("\\r", "\n");
 	}
 
 	private License(String id, String longName, String url, String... recognitionPatterns) {
