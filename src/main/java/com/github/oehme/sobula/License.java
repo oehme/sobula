@@ -67,6 +67,12 @@ public enum License {
 			"GNU Affero General Public License Version 3, 19 November 2007", 
 			"http://www.gnu.org/licenses/agpl-3.0.html",
 			"GNU AFFERO GENERAL PUBLIC LICENSE\\s+Version 3, 19 November 2007"
+	),
+	CPL_V1_0(
+			"CPL-1.0", 
+			"Common Public License (CPL) -- V1.0", 
+			"http://www.ibm.com/developerworks/library/os-cpl.html",
+			"Common Public License\\s+(\\(CPL\\)\\s+)?(--\\s+)?V1.0"
 	);
 	
 	private String id;

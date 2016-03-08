@@ -173,4 +173,27 @@ public class LicenseTest {
         licenseText.onlyMatchedBy(License.AGPL_V3_0)
     }
 
+    @Test
+    def void match_CPL10_license() {
+        val licenseText = '''
+			Common Public License (CPL) -- V1.0
+			
+			03 May 2005
+			Updated 16 Apr 2009
+			
+			As of 25 Feb 2009, IBM has assigned the Agreement Steward role for the
+			CPL to the Eclipse Foundation. Eclipse has designated the Eclipse Public
+			License (EPL) as the follow-on version of the CPL.
+			
+			
+			Eclipse Foundation CPL
+			
+			THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS COMMON
+			PUBLIC LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF
+			THE PROGRAM CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+			...
+        '''
+        licenseText.onlyMatchedBy(License.CPL_V1_0)
+    }
+
 }
